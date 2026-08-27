@@ -1,0 +1,30 @@
+services:
+  interactive-drama:
+    build:
+      context: .
+    ports:
+      - "127.0.0.1:${APP_PORT:-6001}:6001"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 6001
+      MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES:-524288000}
+      STORAGE_DRIVER: local
+      LOCAL_STORAGE_ROOT: /data
+      LOCAL_PUBLIC_BASE_URL: /media
+    volumes:
+      - interactive-drama-data:/data
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:6001/healthz').then(response => { if (!response.ok) process.exit(1) }).catch(() => process.exit(1))"
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  interactive-drama-data:
+    name: interactive-drama-data

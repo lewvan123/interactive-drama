@@ -1,0 +1,15 @@
+.worktrees/
+node_modules/
+dist/
+.data/
+APP-META/docker-config/*.tgz
+playwright-report/
+test-results/
+.env
+.env.local
+.DS_Store
+.superpowers/
+config/mcporter.json
+/互动影游行业深度研究与进入策略_2026.md
+__pycache__/
+*.pyc
